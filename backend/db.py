@@ -12,7 +12,7 @@ DB_DATABASE = os.getenv("DB_DATABASE", "kodilan_stats")
 def get_connection():
     return pymysql.connect(DB_HOST,DB_USER, DB_PASS, DB_DATABASE, cursorclass=pymysql.cursors.DictCursor)
 
-connection = get_connection()
+connection = Connection = None
 
 def create_post_record(post):
     if check_post_exists_by_slug(post["slug"]):
@@ -59,7 +59,7 @@ def get_position_stats(startDate, endDate, order = "desc"):
         return result
 
 def get_lang_stats(startDate, endDate, order = "desc"):
-    langs = ["java", "c#", "python", "javascript", "go", "dart", "php", "ruby"]
+    langs = ["java", "c#", "python", "javascript", "go", "dart", "php", "ruby", "c", "c++", "typescript"]
     with connection.cursor() as cursor:
         res = []
         for lang in langs:
@@ -84,7 +84,7 @@ def get_tech_stats(startDate, endDate, order = "desc"):
 
 
 def get_web_framework_stats(startDate, endDate, order = "desc"):
-    langs = ["spring", "django", "rails", "laravel", "express", "flask", "rails", "dotnet"]
+    langs = ["spring", "django", "rails", "laravel", "express", "flask", "dotnet", "asp.net", "jsp", "symfony"]
     with connection.cursor() as cursor:
         res = []
         for lang in langs:
@@ -96,7 +96,7 @@ def get_web_framework_stats(startDate, endDate, order = "desc"):
         return res
 
 def get_front_end_tech_stats(startDate, endDate, order = "desc"):
-    langs = ["react", "vue", "jquery", "bootstrap", "angular", "redux", "vuex", "figma"]
+    langs = ["react", "vue", "jquery", "bootstrap", "angular", "redux", "vuex", "figma", "photoshop"]
     with connection.cursor() as cursor:
         res = []
         for lang in langs:
