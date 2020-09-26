@@ -12,8 +12,8 @@ def create_post_record(post):
     if check_post_exists_by_slug(post["slug"]):
         return
     with connection.cursor() as cursor:
-        sql = """INSERT INTO kodilan_posts(slug, position, location, created_at, company, tags)VALUES(%s,%s,%s,%s,%s,%s)"""
-        cursor.execute(sql, (post.get('slug'), post.get('position'), post.get('location'), post.get('created_at'), post.get('company'), post.get('tags')))
+        sql = """INSERT INTO kodilan_posts(slug, position, location, created_at, company, tags, description)VALUES(%s,%s,%s,%s,%s,%s,%s)"""
+        cursor.execute(sql, (post.get('slug'), post.get('position'), post.get('location'), post.get('created_at'), post.get('company'), post.get('tags'), post.get('description')))
         connection.commit()
 
 def check_post_exists_by_slug(slug):
