@@ -6,9 +6,9 @@ import csv_utils
 import os
 
 DB_HOST = os.getenv("DB_HOST", "localhost")
-DB_USER = os.getenv("DB_USER", "localhost")
-DB_PASS = os.getenv("DB_PASS", "localhost")
-DB_DATABASE = os.getenv("DB_DATABASE", "localhost")
+DB_USER = os.getenv("DB_USER", "")
+DB_PASS = os.getenv("DB_PASS", "")
+DB_DATABASE = os.getenv("DB_DATABASE", "kodilan_stats")
 
 connection = pymysql.connect(DB_HOST,DB_USER, DB_PASS, DB_DATABASE, cursorclass=pymysql.cursors.DictCursor)
 
