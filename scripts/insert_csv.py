@@ -3,8 +3,14 @@ from collections import Counter
 import operator
 import itertools
 import csv_utils
+import os
 
-connection = pymysql.connect("localhost","root","toor","development",cursorclass=pymysql.cursors.DictCursor)
+DB_HOST = os.getenv("DB_HOST", "localhost")
+DB_USER = os.getenv("DB_USER", "localhost")
+DB_PASS = os.getenv("DB_PASS", "localhost")
+DB_DATABASE = os.getenv("DB_DATABASE", "localhost")
+
+connection = pymysql.connect(DB_HOST,DB_USER, DB_PASS, DB_DATABASE, cursorclass=pymysql.cursors.DictCursor)
 
 def insert_tag(tag):
     with connection.cursor() as cursor:
@@ -19,5 +25,6 @@ def delete_old_tags():
         connection.commit()
 
 delete_old_tags()
+
 for tag in csv_utils.get_tags_from_csv('tags2.csv'):
     insert_tag(tag)

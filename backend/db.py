@@ -2,9 +2,15 @@ import pymysql
 from collections import Counter
 import operator
 import itertools
+import os
+
+DB_HOST = os.getenv("DB_HOST", "localhost")
+DB_USER = os.getenv("DB_USER", "localhost")
+DB_PASS = os.getenv("DB_PASS", "localhost")
+DB_DATABASE = os.getenv("DB_DATABASE", "localhost")
 
 def get_connection():
-    return pymysql.connect("localhost","root","toor","development",cursorclass=pymysql.cursors.DictCursor)
+    return pymysql.connect(DB_HOST,DB_USER, DB_PASS, DB_DATABASE, cursorclass=pymysql.cursors.DictCursor)
 
 connection = get_connection()
 
