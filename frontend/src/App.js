@@ -10,7 +10,7 @@ import TechStats from './components/techstats/default';
 
 function App() {
   const [date, setDate] = useState({startDate: null, endDate: null})
-  const backend = process.env.API_URL || "http://localhost:5000"
+  const backend = process.env.REACT_APP_API_URL || "http://localhost:5000"
 
   function changeDate(period){
     if (period === "all") {
