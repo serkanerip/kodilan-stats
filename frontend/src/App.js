@@ -9,7 +9,7 @@ import TechStats from './components/techstats/default';
 
 function App() {
   const [date, setDate] = useState({startDate: null, endDate: null})
-  const backend = "http://localhost:5000"
+  const backend = process.env.apiurl || "http://localhost:5000"
 
   function changeDate(period){
     if (period === "all") {
