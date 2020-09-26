@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-function PositionStats({date}) {
+function PositionStats({backend, date}) {
     const [stats, setStats] = useState([]);
-    const apiURL = "http://localhost:5000/api/v1/stats/position"
+    const apiURL = `${backend}/api/v1/stats/position`
 
     useEffect(() => {
         const params = date.startDate !== null ? 

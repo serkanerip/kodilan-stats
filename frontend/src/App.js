@@ -9,6 +9,7 @@ import TechStats from './components/techstats/default';
 
 function App() {
   const [date, setDate] = useState({startDate: null, endDate: null})
+  const backend = "http://localhost:5000"
 
   function changeDate(period){
     if (period === "all") {
@@ -37,22 +38,22 @@ function App() {
           <button className="mr-2 btn btn-primary">Bu Hafta</button>
         </div>
         <div className="col-4">
-          <CityStats date={date}/>
+          <CityStats backend={backend} date={date}/>
         </div>
         <div className="col-4">
-          <PositionStats date={date}/>
+          <PositionStats backend={backend} date={date}/>
         </div>
         <div className="col-4">
-          <TagStats date={date}/>
+          <TagStats backend={backend} date={date}/>
         </div>
         <div className="col-4">
-          <LangStats date={date}/>
+          <LangStats backend={backend} date={date}/>
         </div>
         <div className="col-4">
-          <TechStats date={date}/>
+          <TechStats backend={backend} date={date}/>
         </div>
         <div className="col-4">
-          <FrontendStats date={date}/>
+          <FrontendStats backend={backend} date={date}/>
         </div>
       </div>
     </div>
