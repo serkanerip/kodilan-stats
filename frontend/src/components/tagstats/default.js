@@ -25,7 +25,7 @@ function TagStats({backend, date}) {
                 </thead>
                 <tbody>
                     {stats.slice(0,10).map(stat => (
-                        <tr>
+                        <tr key={stat.tag}>
                             <td>{stat.tag}</td>
                             <td>{stat.count}</td>
                         </tr>

@@ -25,7 +25,7 @@ function CityStats({ backend, date }) {
                 </thead>
                 <tbody>
                     {stats.slice(0, 10).map(stat => (
-                        <tr>
+                        <tr key={stat.location}>
                             <td>{stat.location}</td>
                             <td>{stat.toplam_ilan_sayisi}</td>
                         </tr>

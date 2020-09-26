@@ -25,7 +25,7 @@ function LangStats({backend, date}) {
                 </thead>
                 <tbody>
                     {stats.slice(0,10).map(stat => (
-                        <tr>
+                        <tr key={stat.lang}>
                             <td>{stat.lang}</td>
                             <td>{stat.total}</td>
                         </tr>

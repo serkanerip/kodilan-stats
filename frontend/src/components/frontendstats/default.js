@@ -25,7 +25,7 @@ function FrontendStats({backend, date}) {
                 </thead>
                 <tbody>
                     {stats.slice(0,10).map(stat => (
-                        <tr>
+                        <tr key={stat.tech}>
                             <td>{stat.tech}</td>
                             <td>{stat.total}</td>
                         </tr>

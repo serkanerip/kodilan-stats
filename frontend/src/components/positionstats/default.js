@@ -25,7 +25,7 @@ function PositionStats({backend, date}) {
                 </thead>
                 <tbody>
                     {stats.slice(0,10).map(stat => (
-                        <tr>
+                        <tr key={stat.position}>
                             <td>{stat.position}</td>
                             <td>{stat.toplam_ilan_sayisi}</td>
                         </tr>
