@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import moment from "moment";
 import './App.css';
 import CityStats from './components/citystats/default';
 import FrontendStats from './components/frontendstats/default';
@@ -18,6 +19,28 @@ function App() {
         endDate: '2900-01-01'
       })
     }
+    if (period === 'year') {
+      var year = new Date().getFullYear();
+      setDate({
+        startDate: moment().startOf('year').format('YYYY-MM-DD'),
+        endDate: moment().endOf('year').format('YYYY-MM-DD'),
+      })
+    }
+    if (period === 'month') {
+      var year = new Date().getFullYear();
+      setDate({
+        startDate: moment().startOf('month').format('YYYY-MM-DD'),
+        endDate: moment().endOf('month').format('YYYY-MM-DD'),
+      })
+    }
+    if (period === 'week') {
+      var year = new Date().getFullYear();
+      var month = new Date().getMonth();
+      setDate({
+        startDate: moment().startOf('week').format('YYYY-MM-DD'),
+        endDate: moment().endOf('week').format('YYYY-MM-DD'),
+      })
+    }
   }
 
   return (
@@ -33,9 +56,9 @@ function App() {
         </div>
         <div className="col-12 mb-5">
           <button onClick={() => changeDate('all')} className="mr-2 btn btn-primary">Tüm Kayıtlar</button>
-          <button className="mr-2 btn btn-primary">Bu Yıl</button>
-          <button className="mr-2 btn btn-primary">Bu Ay</button>
-          <button className="mr-2 btn btn-primary">Bu Hafta</button>
+          <button onClick={() => changeDate('year')} className="mr-2 btn btn-primary">Bu Yıl</button>
+          <button onClick={() => changeDate('month')} className="mr-2 btn btn-primary">Bu Ay</button>
+          <button onClick={() => changeDate('week')} className="mr-2 btn btn-primary">Bu Hafta</button>
         </div>
         <div className="col-4">
           <CityStats backend={backend} date={date}/>
