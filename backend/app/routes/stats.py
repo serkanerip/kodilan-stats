@@ -1,24 +1,24 @@
-import flask
-import tags_finder
-import db
 import itertools
-import kodilan_client
-from collections import Counter
 from datetime import date
-from flask import request, jsonify
-from flask_cors import CORS
+from flask import request, Blueprint, g
+from app import app
+from collections import Counter
+from app.repo import post_repo
+from app.business import tags_finder
+from app.interfaces import kodilan_client
 
-app = flask.Flask(__name__)
-app.config["DEBUG"] = True
-CORS(app)
+stats_api = Blueprint('stats', __name__, url_prefix="/api/v1")
 
-tagList = db.get_tags()
+def getTagList():
+    if (not hasattr(g, 'tl')):
+        g.tl = post_repo.get_tags()
+    return g.tl
 
 @app.route("/api/v1/setupposts")
 def setupPosts():
     posts = kodilan_client.getPosts()
     for post in posts:
-        db.create_post_record(post)
+        post_repo.create_post_record(post)
     return { 'message': 'Success!' }
 
 @app.route("/api/v1/extracttags")
@@ -26,17 +26,18 @@ def tag():
     text = request.form.get('text', type = str)
     if (text is None):
         return { 'data': []}
-    return { 'data': tags_finder.exportTagsFromText(text, tagList) }
+    return { 'data': tags_finder.exportTagsFromText(text, getTagList()) }
+
 
 @app.route("/api/v1/stats/tag")
 def tagStats():
     order = request.args.get('order', default = 'desc', type = str)
     startDate = request.args.get('startDate', default = date(date.today().year, 1, 1).strftime("%Y-%m-%d"), type = str)
     endDate = request.args.get('endDate', default = date(date.today().year, 12, 31).strftime("%Y-%m-%d"), type = str)
-    descriptions = db.get_descriptions(startDate=startDate, endDate=endDate, order=order)
+    descriptions = post_repo.get_descriptions(startDate=startDate, endDate=endDate, order=order)
     allPostTags = []
     for result in descriptions:
-        allPostTags.append(tags_finder.exportTagsFromText(result["description"], tagList))
+        allPostTags.append(tags_finder.exportTagsFromText(result["description"], getTagList()))
     allPostTags = itertools.chain.from_iterable(allPostTags) # flat list
     mostTags = []
     for tup in Counter(allPostTags).most_common(50):
@@ -54,7 +55,7 @@ def getAll():
     startDate = request.args.get('startDate', default = date(date.today().year, 1, 1).strftime("%Y-%m-%d"), type = str)
     endDate = request.args.get('endDate', default = date(date.today().year, 12, 31).strftime("%Y-%m-%d"), type = str)
     return {
-        'data': db.get_all(startDate=startDate, endDate=endDate, order=order)
+        'data': post_repo.get_all(startDate=startDate, endDate=endDate, order=order)
     }
 
 @app.route("/api/v1/stats/location")
@@ -63,7 +64,7 @@ def locStats():
     startDate = request.args.get('startDate', default = date(date.today().year, 1, 1).strftime("%Y-%m-%d"), type = str)
     endDate = request.args.get('endDate', default = date(date.today().year, 12, 31).strftime("%Y-%m-%d"), type = str)
     return {
-        'data': db.get_location_stats(startDate=startDate, endDate=endDate, order=order)
+        'data': post_repo.get_location_stats(startDate=startDate, endDate=endDate, order=order)
     }
 
 @app.route("/api/v1/stats/company")
@@ -72,7 +73,7 @@ def compStats():
     startDate = request.args.get('startDate', default = date(date.today().year, 1, 1).strftime("%Y-%m-%d"), type = str)
     endDate = request.args.get('endDate', default = date(date.today().year, 12, 31).strftime("%Y-%m-%d"), type = str)
     return {
-        'data': db.get_company_stats(startDate=startDate, endDate=endDate, order=order)
+        'data': post_repo.get_company_stats(startDate=startDate, endDate=endDate, order=order)
     }
 
 @app.route("/api/v1/stats/position")
@@ -81,7 +82,7 @@ def posStats():
     startDate = request.args.get('startDate', default = date(date.today().year, 1, 1).strftime("%Y-%m-%d"), type = str)
     endDate = request.args.get('endDate', default = date(date.today().year, 12, 31).strftime("%Y-%m-%d"), type = str)
     return {
-        'data': db.get_position_stats(startDate=startDate, endDate=endDate, order=order)
+        'data': post_repo.get_position_stats(startDate=startDate, endDate=endDate, order=order)
     }
 
 @app.route("/api/v1/stats/lang")
@@ -90,7 +91,7 @@ def langStats():
     startDate = request.args.get('startDate', default = date(date.today().year, 1, 1).strftime("%Y-%m-%d"), type = str)
     endDate = request.args.get('endDate', default = date(date.today().year, 12, 31).strftime("%Y-%m-%d"), type = str)
     return {
-        'data': db.get_lang_stats(startDate=startDate, endDate=endDate, order=order)
+        'data': post_repo.get_lang_stats(startDate=startDate, endDate=endDate, order=order)
     }
 
 @app.route("/api/v1/stats/tech")
@@ -99,7 +100,7 @@ def techStats():
     startDate = request.args.get('startDate', default = date(date.today().year, 1, 1).strftime("%Y-%m-%d"), type = str)
     endDate = request.args.get('endDate', default = date(date.today().year, 12, 31).strftime("%Y-%m-%d"), type = str)
     return {
-        'data': db.get_web_framework_stats(startDate=startDate, endDate=endDate, order=order)
+        'data': post_repo.get_web_framework_stats(startDate=startDate, endDate=endDate, order=order)
     }
 
 @app.route("/api/v1/stats/web")
@@ -108,7 +109,7 @@ def wfStats():
     startDate = request.args.get('startDate', default = date(date.today().year, 1, 1).strftime("%Y-%m-%d"), type = str)
     endDate = request.args.get('endDate', default = date(date.today().year, 12, 31).strftime("%Y-%m-%d"), type = str)
     return {
-        'data': db.get_web_framework_stats(startDate=startDate, endDate=endDate, order=order)
+        'data': post_repo.get_web_framework_stats(startDate=startDate, endDate=endDate, order=order)
     }
 
 @app.route("/api/v1/stats/frontend")
@@ -117,15 +118,5 @@ def fendStats():
     startDate = request.args.get('startDate', default = date(date.today().year, 1, 1).strftime("%Y-%m-%d"), type = str)
     endDate = request.args.get('endDate', default = date(date.today().year, 12, 31).strftime("%Y-%m-%d"), type = str)
     return {
-        'data': db.get_front_end_tech_stats(startDate=startDate, endDate=endDate, order=order)
+        'data': post_repo.get_front_end_tech_stats(startDate=startDate, endDate=endDate, order=order)
     }
-
-@app.before_request
-def before():
-    db.connection = db.get_connection()
-
-@app.after_request
-def after(response):
-    return response
-
-app.run(host='0.0.0.0')
