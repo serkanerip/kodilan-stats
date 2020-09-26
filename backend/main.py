@@ -128,4 +128,4 @@ def before():
 def after(response):
     return response
 
-app.run()
+app.run(host='0.0.0.0')
