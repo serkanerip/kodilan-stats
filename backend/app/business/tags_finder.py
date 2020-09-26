@@ -2,7 +2,10 @@ def exportTagsFromText(text, allTags):
     exportedTags = []
     text = text.lower()
     text = remove_html_tags(text)
-    textArr = set(text.replace(',', ' ').split(' '))
+    replaceChars = ",({)}"
+    for char in replaceChars:
+        text = text.replace(char, ' ')
+    textArr = set(text.split(' '))
     for tag in allTags:
         if tag in textArr:
             exportedTags.append(tag)
