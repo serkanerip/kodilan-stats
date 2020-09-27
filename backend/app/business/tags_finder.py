@@ -15,24 +15,20 @@ def exportTagsFromTextOld(text, allTags):
 
 
 def is_tag_in_text(tag, text) -> bool:
-    tag = tag.replace('-', ' ')
-    # react gecen kelimeler reactjs'e cevrildigi icin
-    # react-native tagini bulamiyor bu yüzden tagi sanki
-    # reactjs native gibiymis gibi gösteriyoruz.
-    if tag == 'react native':
-        tag = 'reactjs native'
-    pos = 0
-    # tag textte birden fazla yerde gecebilir bu yüzden while ile tum eslesmeleri kontrol ediyoruz.
-    while pos < len(text):
-        pos = text.find(tag, pos)
-        if pos == -1:
-            break
-        prevChar = pos-1 < 0 and True or (text[pos-1] is ' ' or text[pos-1] is ',' or text[pos-1] is '\n')
-        nextChar = pos+len(tag) >= len(text) and True or text[pos+len(tag)] is ' ' or text[pos+len(tag)] is ',' or text[pos+len(tag)] is '\n'
-        if (nextChar and prevChar):
-            # apache kafka gibi tagler geldigi zaman tekrar apache icinde bulmasin diye tagi cumleden cikar.
-            return True
-        pos += len(tag)
+    for currentTag in tag.split('|'):
+        currentTag = currentTag.replace('-', ' ')
+        pos = 0
+        # tag textte birden fazla yerde gecebilir bu yüzden while ile tum eslesmeleri kontrol ediyoruz.
+        while pos < len(text):
+            pos = text.find(currentTag, pos)
+            if pos == -1:
+                break
+            prevChar = pos-1 < 0 and True or (text[pos-1] is ' ' or text[pos-1] is ',' or text[pos-1] is '\n')
+            nextChar = pos+len(currentTag) >= len(text) and True or text[pos+len(currentTag)] is ' ' or text[pos+len(currentTag)] is ',' or text[pos+len(currentTag)] is '\n'
+            if (nextChar and prevChar):
+                # apache kafka gibi tagler geldigi zaman tekrar apache icinde bulmasin diye tagi cumleden cikar.
+                return True
+            pos += len(currentTag)
     return False
 
 def exportTagsFromText(text, allTags):
@@ -40,25 +36,6 @@ def exportTagsFromText(text, allTags):
     exportedTags = []
     text = text.lower()
     text = remove_html_tags(text)
-
-    # ayni anlama gelip farkli yazilabilen tagleri bulabilmesi icin replaceler
-    if not 'ruby on rails' in text:
-        text = text.replace('rails', 'ruby on rails')
-    if not 'reactjs' in text:
-        text = text.replace('react', 'reactjs')
-    if not 'vue.js' in text:
-        text = text.replace('vue', 'vue.js')
-        text = text.replace('vuejs', 'vue.js')
-    if 'nodejs' in text:
-        text = text.replace('nodejs', 'node.js')
-    if not 'css3' in text:
-        text = text.replace('css', 'css3')
-    if not 'html5' in text:
-        text = text.replace('html', 'html5')
-    if not 'apache kafka' in text:
-        text = text.replace('kafka', 'apache kafka')
-    if 'ingilizce' in text:
-        text = text.replace('ingilizce', 'english')
 
     # diyelimki text icinde s35, kelimesi geciyor s3 tagi text icinde gecmis oluyor ancak aradigimiz bu degil
     # bunun kontrolu icin text icinde bulunan eslesmenin pozisyonunun bir onceki karakterin ve o cumleden sonraki karakterin
@@ -72,7 +49,7 @@ def exportTagsFromText(text, allTags):
     for tag in allTags:
         if is_tag_in_text(tag, text):
             text = text.replace(tag, '')
-            exportedTags.append(tag)
+            exportedTags.append(tag.split('|')[0])
     return exportedTags
 
 def remove_html_tags(text):

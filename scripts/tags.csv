@@ -1,5 +1,7 @@
 c
 c#
+fastapi
+gin
 golang
 ui
 ux
@@ -21,7 +23,7 @@ mvc
 aws
 php
 xml
-css3
+css3|css
 sql
 tcp
 udp
@@ -31,21 +33,17 @@ mssql
 svelte
 zend
 .net
-html5
+html5|html
 ruby
 lisp
 java
 tsql
 linq
 unix
-tags
-math
 xslt
 heap
-size
 ajax
-rest
-restful
+rest|restful|restapi
 bash
 grid
 mono
@@ -107,18 +105,15 @@ bots
 copy
 eval
 ldap
-menu
 http
 file
 crud
 wget
 list
 jdbc
-move
 ping
 pipe
 edit
-view
 jira
 crop
 zoom
@@ -281,6 +276,7 @@ range
 count
 popup
 click
+clickhouse
 local
 panel
 nginx
@@ -352,6 +348,7 @@ https
 xhtml
 big-o
 excel
+olap
 shell
 mouse
 macos
@@ -607,7 +604,7 @@ docker
 xcode6
 jestjs
 gcloud
-vue.js
+vue.js|vue|vuejs
 unity5
 devops
 xcode7
@@ -648,7 +645,7 @@ powerbi
 centos7
 aws-sdk
 ansible
-reactjs
+reactjs|react
 polymer
 rx-java
 wildfly
@@ -681,7 +678,7 @@ pycharm
 promise
 shopify
 netlogo
-node.js
+node.js|node|nodejs
 mariadb
 bundler
 openerp
@@ -799,7 +796,6 @@ integer
 openssl
 maven-2
 fortran
-message
 haskell
 textbox
 counter
@@ -1207,7 +1203,6 @@ connection
 validation
 parameters
 nhibernate
-processing
 statistics
 powershell
 coldfusion
@@ -1344,7 +1339,7 @@ discord.js
 jakarta-ee
 responsive
 vue-router
-english
+english|ingilizce
 python-3.6
 python-3.7
 vuetify.js
@@ -1582,7 +1577,7 @@ node-modules
 github-pages
 raspberry-pi
 sublimetext2
-apache-kafka
+apache-kafka|kafka
 progress-bar
 uistoryboard
 font-awesome
@@ -1621,7 +1616,7 @@ laravel-blade
 google-signin
 deep-learning
 xamarin.forms
-microservices
+microservices|microservice
 instagram-api
 asp.net-mvc-5
 karma-jasmine
@@ -1693,7 +1688,7 @@ core-graphics
 partial-views
 concatenation
 splash-screen
-ruby-on-rails
+ruby-on-rails|rails
 runtime-error
 sql-injection
 code-coverage
