@@ -1,24 +1,6 @@
 import re
 
 
-def check_string_is_substring(text, pos, length):
-    acceptable_chars = [' ', ',', '\n']
-    prev_char = text[pos - 1]
-    next_char = text[pos + length]
-
-    is_prev_fine = False
-    if pos - 1 > 0:
-        is_prev_fine = True
-    else:
-        is_prev_fine = prev_char in acceptable_chars
-
-    if pos + length >= len(text):
-        is_next_fine = True
-    else:
-        is_next_fine = next_char in acceptable_chars
-    return not (is_next_fine and is_prev_fine)
-
-
 def is_tag_in_text(tag, text) -> bool:
     for currentTag in tag.split('|'):
         currentTag = currentTag.replace('-', ' ')
@@ -29,7 +11,9 @@ def is_tag_in_text(tag, text) -> bool:
             pos = text.find(currentTag, pos)
             if pos == -1:
                 break
-            if (not check_string_is_substring(text, pos, len(currentTag))):
+            prevChar = pos-1 < 0 and True or (text[pos-1] is ' ' or text[pos-1] is ',' or text[pos-1] is '\n')
+            nextChar = pos+len(currentTag) >= len(text) and True or text[pos+len(currentTag)] is ' ' or text[pos+len(currentTag)] is ',' or text[pos+len(currentTag)] is '\n'
+            if nextChar and prevChar:
                 return True
             pos += len(currentTag)
     return False
