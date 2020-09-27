@@ -21,7 +21,7 @@ def setupPosts():
         post_repo.create_post_record(post)
     return { 'message': 'Success!' }
 
-@app.route("/api/v1/extracttags")
+@stats_api.route("/api/v1/extracttags", methods=["GET", "POST"])
 def tag():
     text = request.form.get('text', type = str)
     if (text is None):
