@@ -3,6 +3,14 @@ c#
 golang
 ui
 ux
+ci
+cd
+s3
+ecs
+sqs
+sns
+tdd
+bdd
 c++
 ssi
 yii
@@ -13,7 +21,7 @@ mvc
 aws
 php
 xml
-css
+css3
 sql
 tcp
 udp
@@ -22,7 +30,7 @@ async
 mssql
 zend
 .net
-html
+html5
 ruby
 lisp
 java
@@ -188,6 +196,7 @@ dask
 ngrx
 vuex
 expo
+tailwind
 c++17
 axios
 ios10
@@ -404,7 +413,6 @@ upload
 webcam
 winapi
 matlab
-events
 lambda
 layout
 base64
@@ -818,7 +826,6 @@ logging
 log4net
 plugins
 outlook
-virtual
 firebug
 ado.net
 file-io
@@ -1701,7 +1708,6 @@ google-chrome
 client-server
 reverse-proxy
 drag-and-drop
-accessibility
 authorization
 visualization
 interpolation
