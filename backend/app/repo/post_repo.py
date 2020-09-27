@@ -106,7 +106,7 @@ def get_front_end_tech_stats(startDate, endDate, order = "desc"):
         return res
 
 def get_tags():
-    sql = "SELECT * from kodilan_tags"
+    sql = "SELECT * from kodilan_tags order by length(tag) desc"
     with run_query(sql, cursor_type=pymysql.cursors.Cursor) as cursor:
         flatten = itertools.chain.from_iterable
         return list(flatten(cursor.fetchall()))
