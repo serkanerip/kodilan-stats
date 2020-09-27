@@ -13,12 +13,33 @@ def exportTagsFromTextOld(text, allTags):
             exportedTags.append(tag)
     return exportedTags
 
+
+def is_tag_in_text(tag, text) -> bool:
+    tag = tag.replace('-', ' ')
+    # react gecen kelimeler reactjs'e cevrildigi icin
+    # react-native tagini bulamiyor bu yüzden tagi sanki
+    # reactjs native gibiymis gibi gösteriyoruz.
+    if tag == 'react native':
+        tag = 'reactjs native'
+    pos = 0
+    # tag textte birden fazla yerde gecebilir bu yüzden while ile tum eslesmeleri kontrol ediyoruz.
+    while pos < len(text):
+        pos = text.find(tag, pos)
+        if pos == -1:
+            break
+        prevChar = pos-1 < 0 and True or (text[pos-1] is ' ' or text[pos-1] is ',' or text[pos-1] is '\n')
+        nextChar = pos+len(tag) >= len(text) and True or text[pos+len(tag)] is ' ' or text[pos+len(tag)] is ',' or text[pos+len(tag)] is '\n'
+        if (nextChar and prevChar):
+            # apache kafka gibi tagler geldigi zaman tekrar apache icinde bulmasin diye tagi cumleden cikar.
+            return True
+        pos += len(tag)
+    return False
+
 def exportTagsFromText(text, allTags):
     # taglerin en uzun tagden en kisaya gore gelmesi lazım yoksa duzgun calismaz.
     exportedTags = []
     text = text.lower()
     text = remove_html_tags(text)
-
 
     # ayni anlama gelip farkli yazilabilen tagleri bulabilmesi icin replaceler
     if not 'ruby on rails' in text:
@@ -49,27 +70,9 @@ def exportTagsFromText(text, allTags):
         text = text.replace(char, ' ')
     
     for tag in allTags:
-        orgTag = tag
-        tag = tag.replace('-', ' ')
-        # react gecen kelimeler reactjs'e cevrildigi icin
-        # react-native tagini bulamiyor bu yüzden tagi sanki
-        # reactjs native gibiymis gibi gösteriyoruz.
-        if tag == 'react native':
-            tag = 'reactjs native'
-        pos = 0
-        # tag textte birden fazla yerde gecebilir bu yüzden while ile tum eslesmeleri kontrol ediyoruz.
-        while pos < len(text):
-            pos = text.find(tag, pos)
-            if pos == -1:
-                break
-            prevChar = pos-1 < 0 and True or (text[pos-1] is ' ' or text[pos-1] is ',' or text[pos-1] is '\n')
-            nextChar = pos+len(tag) >= len(text) and True or text[pos+len(tag)] is ' ' or text[pos+len(tag)] is ',' or text[pos+len(tag)] is '\n'
-            if (nextChar and prevChar):
-                # apache kafka gibi tagler geldigi zaman tekrar apache icinde bulmasin diye tagi cumleden cikar.
-                text = text.replace(tag, '')
-                exportedTags.append(orgTag)
-                break
-            pos += len(tag)
+        if is_tag_in_text(tag, text):
+            text = text.replace(tag, '')
+            exportedTags.append(tag)
     return exportedTags
 
 def remove_html_tags(text):
