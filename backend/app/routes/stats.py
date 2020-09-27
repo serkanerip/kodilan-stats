@@ -16,19 +16,21 @@ def t():
     global tagsList
     tagsList = post_repo.get_tags()
 
+
 @stats_api.route("/setupposts")
 def setupPosts():
     posts = kodilan_client.getPosts()
     for post in posts:
         post_repo.create_post_record(post)
-    return { 'message': 'Success!' }
+    return {'message': 'Success!'}
+
 
 @stats_api.route("/extracttags", methods=["GET", "POST"])
 def tag():
-    text = request.form.get('text', type = str)
+    text = request.form.get('text', type=str)
     if (text is None):
-        return { 'data': []}
-    return { 'data': tags_finder.exportTagsFromText(text, tagsList) }
+        return {'data': []}
+    return {'data': tags_finder.export_tags_from_text(text, tagsList)}
 
 
 def get_tags_from_descriptions(startDate, endDate, order):
@@ -38,7 +40,7 @@ def get_tags_from_descriptions(startDate, endDate, order):
     allPostTags = []
     for result in descriptions:
         postContent = result["description"] + "\n" + result["tags"]
-        allPostTags.append(tags_finder.exportTagsFromText(postContent, tagsList))
+        allPostTags.append(tags_finder.export_tags_from_text(postContent, tagsList))
     counter = Counter(itertools.chain.from_iterable(allPostTags)) # flat list
     tagsListCounter[f'{startDate}-{endDate}'] = counter
     return counter
