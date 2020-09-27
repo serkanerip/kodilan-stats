@@ -34,13 +34,17 @@ def tagStats():
     order = request.args.get('order', default = 'desc', type = str)
     startDate = request.args.get('startDate', default = date(date.today().year, 1, 1).strftime("%Y-%m-%d"), type = str)
     endDate = request.args.get('endDate', default = date(date.today().year, 12, 31).strftime("%Y-%m-%d"), type = str)
+    limit = request.args.get('limit', default = 10, type = int)
     descriptions = post_repo.get_descriptions(startDate=startDate, endDate=endDate, order=order)
     allPostTags = []
     for result in descriptions:
         allPostTags.append(tags_finder.exportTagsFromText(result["description"], getTagList()))
     allPostTags = itertools.chain.from_iterable(allPostTags) # flat list
     mostTags = []
-    for tup in Counter(allPostTags).most_common(50):
+    counter = Counter(allPostTags)
+    if limit < 1 or limit >= counter.__len__():
+        limit = 10
+    for tup in counter.most_common(limit):
         mostTags.append({
             'tag': tup[0],
             'count': tup[1]

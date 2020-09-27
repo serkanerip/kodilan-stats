@@ -26,5 +26,7 @@ def delete_old_tags():
 
 delete_old_tags()
 
-for tag in csv_utils.get_tags_from_csv('tags2.csv'):
-    insert_tag(tag)
+with open('tags.csv', 'r') as reader:
+    content = reader.read()
+    for tag in content.split('\n'):
+        insert_tag(tag)

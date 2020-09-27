@@ -15,7 +15,7 @@ def exportTagsFromText(text, allTags):
     exportedTags = []
     text = text.lower()
     text = remove_html_tags(text)
-    
+
     if not 'reactjs' in text:
         text = text.replace('react', 'reactjs')
     if not 'vue.js' in text:
@@ -28,8 +28,8 @@ def exportTagsFromText(text, allTags):
     for tag in allTags:
         tag = tag.replace('-', ' ')
         pos = text.find(tag)
-        prevChar = (text[pos-1] is ' ' or text[pos-1] is ',' or text[pos-1] is '\n')
-        nextChar = (text[pos+len(tag)] is ' ' or text[pos+len(tag)] is ',' or text[pos+len(tag)] is '\n')
+        prevChar = pos-1 < 0 and True or (text[pos-1] is ' ' or text[pos-1] is ',' or text[pos-1] is '\n')
+        nextChar = pos+len(tag) >= len(text) and True or text[pos+len(tag)] is ' ' or text[pos+len(tag)] is ',' or text[pos+len(tag)] is '\n'
         if tag == "git":
             print(pos, text[pos-1],prevChar, nextChar)
         if pos != -1 and nextChar and prevChar:
