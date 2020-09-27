@@ -9,6 +9,7 @@ from app.interfaces import kodilan_client
 
 stats_api = Blueprint('stats', __name__, url_prefix="/api/v1")
 tagsList = list = []
+tagsListCounter = dict = {} 
 
 @app.before_first_request
 def t():
@@ -31,12 +32,16 @@ def tag():
 
 
 def get_tags_from_descriptions(startDate, endDate, order):
+    if (f'{startDate}-{endDate}' in tagsListCounter):
+        return tagsListCounter[f'{startDate}-{endDate}']
     descriptions = post_repo.get_descriptions_and_tags(startDate=startDate, endDate=endDate, order=order)
     allPostTags = []
     for result in descriptions:
         postContent = result["description"] + "\n" + result["tags"]
         allPostTags.append(tags_finder.exportTagsFromText(postContent, tagsList))
-    return Counter(itertools.chain.from_iterable(allPostTags)) # flat list
+    counter = Counter(itertools.chain.from_iterable(allPostTags)) # flat list
+    tagsListCounter[f'{startDate}-{endDate}'] = counter
+    return counter
 
 
 @app.route("/api/v1/stats/tag")
