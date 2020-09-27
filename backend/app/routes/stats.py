@@ -116,7 +116,7 @@ def techStats():
     langs = ["spring", "django", "ruby on rails", "laravel", "express", "flask", ".net", "jsp", "symfony"]
     res = []
     for lang in langs:
-        res.append({"lang": lang, "total": allTags[lang]})
+        res.append({"tech": lang, "total": allTags[lang]})
     return {
         'data': sorted(res, key=lambda k: k["total"], reverse=True)
     }
@@ -130,7 +130,7 @@ def wfStats():
     langs = ["spring", "django", "ruby on rails", "laravel", "express", "flask", ".net", "symfony"]
     res = []
     for lang in langs:
-        res.append({"tect": lang, "total": allTags[lang]})
+        res.append({"tech": lang, "total": allTags[lang]})
     return {
         'data': sorted(res, key=lambda k: k["total"], reverse=True)
     }
@@ -144,7 +144,7 @@ def fendStats():
     langs = ["reactjs", "vue.js", "jquery", "bootstrap", "angular", "redux", "vuex", "figma", "photoshop"]
     res = []
     for lang in langs:
-        res.append({"tect": lang, "total": allTags[lang]})
+        res.append({"tech": lang, "total": allTags[lang]})
     return {
         'data': sorted(res, key=lambda k: k["total"], reverse=True)
     }

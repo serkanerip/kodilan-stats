@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 function TechStats({backend, date}) {
     const [stats, setStats] = useState([]);
-    const apiURL = `${backend}/api/v1/stats/tech`
+    const apiURL = `${backend}/api/v1/stats/web`
 
     useEffect(() => {
         const params = date.startDate !== null ? 
