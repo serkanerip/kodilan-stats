@@ -16,14 +16,14 @@ def t():
     global tagsList
     tagsList = post_repo.get_tags()
 
-@app.route("/api/v1/setupposts")
+@stats_api.route("/setupposts")
 def setupPosts():
     posts = kodilan_client.getPosts()
     for post in posts:
         post_repo.create_post_record(post)
     return { 'message': 'Success!' }
 
-@stats_api.route("/api/v1/extracttags", methods=["GET", "POST"])
+@stats_api.route("/extracttags", methods=["GET", "POST"])
 def tag():
     text = request.form.get('text', type = str)
     if (text is None):
