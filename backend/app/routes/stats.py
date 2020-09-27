@@ -116,7 +116,7 @@ def techStats():
     langs = ["spring", "django", "ruby on rails", "laravel", "express", "flask", ".net", "jsp", "symfony"]
     res = []
     for lang in langs:
-        res.append({lang: allTags[lang]})
+        res.append({"lang": lang, "total": allTags[lang]})
     return {
         'data': sorted(res, key=lambda k: k["total"], reverse=True)
     }
