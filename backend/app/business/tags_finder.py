@@ -31,7 +31,8 @@ def exportTagsFromText(text, allTags):
         text = text.replace('css', 'css3')
     if not 'html5' in text:
         text = text.replace('html', 'html5')
-        
+    if not 'apache kafka' in text:
+        text = text.replace('kafka', 'apache kafka')
     if 'ingilizce' in text:
         text = text.replace('ingilizce', 'english')
 

@@ -59,7 +59,6 @@ null
 port
 hook
 dojo
-post
 uuid
 haml
 plot
@@ -1114,7 +1113,6 @@ histogram
 left-join
 hyperlink
 quicksort
-hierarchy
 undefined
 alignment
 innerhtml
