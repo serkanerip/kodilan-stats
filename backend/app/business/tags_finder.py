@@ -41,6 +41,8 @@ def exportTagsFromText(text, allTags):
     for tag in allTags:
         orgTag = tag
         tag = tag.replace('-', ' ')
+        if tag == 'react native':
+            tag = 'reactjs native'
         pos = 0
         while pos < len(text):
             pos = text.find(tag, pos)
