@@ -28,6 +28,7 @@ udp
 oop
 async
 mssql
+svelte
 zend
 .net
 html5
@@ -769,7 +770,6 @@ refresh
 runtime
 tinymce
 average
-release
 struts2
 listbox
 element
