@@ -19,7 +19,7 @@ function TechStats({backend, date}) {
             <table className="table table-sm table-bordered text-center">
                 <thead>
                     <tr>
-                        <th>Teknoloji</th>
+                        <th>Backend</th>
                         <th>İlan Sayısı</th>
                     </tr>
                 </thead>
