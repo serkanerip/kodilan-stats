@@ -29,22 +29,26 @@ def tag():
     return { 'data': tags_finder.exportTagsFromText(text, getTagList()) }
 
 
+def get_tags_from_descriptions(startDate, endDate, order):
+    descriptions = post_repo.get_descriptions_and_tags(startDate=startDate, endDate=endDate, order=order)
+    allPostTags = []
+    for result in descriptions:
+        postContent = result["description"] + "\n" + result["tags"]
+        allPostTags.append(tags_finder.exportTagsFromText(postContent, getTagList()))
+    return Counter(itertools.chain.from_iterable(allPostTags)) # flat list
+
+
 @app.route("/api/v1/stats/tag")
 def tagStats():
     order = request.args.get('order', default = 'desc', type = str)
     startDate = request.args.get('startDate', default = date(date.today().year, 1, 1).strftime("%Y-%m-%d"), type = str)
     endDate = request.args.get('endDate', default = date(date.today().year, 12, 31).strftime("%Y-%m-%d"), type = str)
     limit = request.args.get('limit', default = 10, type = int)
-    descriptions = post_repo.get_descriptions(startDate=startDate, endDate=endDate, order=order)
-    allPostTags = []
-    for result in descriptions:
-        allPostTags.append(tags_finder.exportTagsFromText(result["description"], getTagList()))
-    allPostTags = itertools.chain.from_iterable(allPostTags) # flat list
+    allPostTags = get_tags_from_descriptions(startDate=startDate, endDate=endDate, order=order)
     mostTags = []
-    counter = Counter(allPostTags)
-    if limit < 1 or limit >= counter.__len__():
+    if limit < 1 or limit >= allPostTags.__len__():
         limit = 10
-    for tup in counter.most_common(limit):
+    for tup in allPostTags.most_common(limit):
         mostTags.append({
             'tag': tup[0],
             'count': tup[1]
@@ -94,8 +98,13 @@ def langStats():
     order = request.args.get('order', default = 'desc', type = str)
     startDate = request.args.get('startDate', default = date(date.today().year, 1, 1).strftime("%Y-%m-%d"), type = str)
     endDate = request.args.get('endDate', default = date(date.today().year, 12, 31).strftime("%Y-%m-%d"), type = str)
+    allTags = get_tags_from_descriptions(startDate=startDate, endDate=endDate, order=order)
+    langs = ["java", "c#", "python", "javascript", "golang", "dart", "php", "ruby", "c", "c++", "typescript"]
+    res = []
+    for lang in langs:
+        res.append({"lang": lang, "total": allTags[lang]})
     return {
-        'data': post_repo.get_lang_stats(startDate=startDate, endDate=endDate, order=order)
+        'data': sorted(res, key=lambda k: k["total"], reverse=True)
     }
 
 @app.route("/api/v1/stats/tech")
@@ -103,8 +112,13 @@ def techStats():
     order = request.args.get('order', default = 'desc', type = str)
     startDate = request.args.get('startDate', default = date(date.today().year, 1, 1).strftime("%Y-%m-%d"), type = str)
     endDate = request.args.get('endDate', default = date(date.today().year, 12, 31).strftime("%Y-%m-%d"), type = str)
+    allTags = get_tags_from_descriptions(startDate=startDate, endDate=endDate, order=order)
+    langs = ["spring", "django", "ruby on rails", "laravel", "express", "flask", ".net", "jsp", "symfony"]
+    res = []
+    for lang in langs:
+        res.append({lang: allTags[lang]})
     return {
-        'data': post_repo.get_web_framework_stats(startDate=startDate, endDate=endDate, order=order)
+        'data': sorted(res, key=lambda k: k["total"], reverse=True)
     }
 
 @app.route("/api/v1/stats/web")
@@ -112,8 +126,13 @@ def wfStats():
     order = request.args.get('order', default = 'desc', type = str)
     startDate = request.args.get('startDate', default = date(date.today().year, 1, 1).strftime("%Y-%m-%d"), type = str)
     endDate = request.args.get('endDate', default = date(date.today().year, 12, 31).strftime("%Y-%m-%d"), type = str)
+    allTags = get_tags_from_descriptions(startDate=startDate, endDate=endDate, order=order)
+    langs = ["spring", "django", "ruby on rails", "laravel", "express", "flask", ".net", "symfony"]
+    res = []
+    for lang in langs:
+        res.append({"tect": lang, "total": allTags[lang]})
     return {
-        'data': post_repo.get_web_framework_stats(startDate=startDate, endDate=endDate, order=order)
+        'data': sorted(res, key=lambda k: k["total"], reverse=True)
     }
 
 @app.route("/api/v1/stats/frontend")
@@ -121,6 +140,11 @@ def fendStats():
     order = request.args.get('order', default = 'desc', type = str)
     startDate = request.args.get('startDate', default = date(date.today().year, 1, 1).strftime("%Y-%m-%d"), type = str)
     endDate = request.args.get('endDate', default = date(date.today().year, 12, 31).strftime("%Y-%m-%d"), type = str)
+    allTags = get_tags_from_descriptions(startDate=startDate, endDate=endDate, order=order)
+    langs = ["reactjs", "vue.js", "jquery", "bootstrap", "angular", "redux", "vuex", "figma", "photoshop"]
+    res = []
+    for lang in langs:
+        res.append({"tect": lang, "total": allTags[lang]})
     return {
-        'data': post_repo.get_front_end_tech_stats(startDate=startDate, endDate=endDate, order=order)
+        'data': sorted(res, key=lambda k: k["total"], reverse=True)
     }

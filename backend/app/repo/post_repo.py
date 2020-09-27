@@ -117,6 +117,12 @@ def get_descriptions(startDate, endDate, order = "desc"):
     with run_query(sql, (startDate, endDate)) as cursor:
         return cursor.fetchall()
 
+def get_descriptions_and_tags(startDate, endDate, order = "desc"):
+    where = f'where `created_at` >= %s && `created_at` <= %s'
+    sql = f'SELECT description, tags from kodilan_posts {where};'
+    with run_query(sql, (startDate, endDate)) as cursor:
+        return cursor.fetchall()
+
 def get_related_tag(allTags, tag):
     tagsSum = ""
     for result in allTags:

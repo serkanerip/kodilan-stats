@@ -1,4 +1,6 @@
 c
+c#
+golang
 c++
 php
 xml
@@ -1347,6 +1349,7 @@ vuetify.js
 discord.py
 laravel-5.3
 laravel-5.4
+bootstrap
 bootstrap-4
 apache-beam
 react-redux
@@ -1629,6 +1632,8 @@ asp.net-mvc-4
 asp.net-mvc-3
 asp.net-mvc-2
 matlab-figure
+figma
+photoshop
 export-to-csv
 elasticsearch
 python-sphinx
