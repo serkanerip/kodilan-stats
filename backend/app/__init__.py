@@ -5,7 +5,7 @@ from flask import request, jsonify, g
 from flask_cors import CORS
 
 app = flask.Flask(__name__)
-app.config["DEBUG"] = True
+app.config.from_pyfile('config.py')
 CORS(app)
 
 def get_connection():

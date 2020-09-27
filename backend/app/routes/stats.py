@@ -1,6 +1,6 @@
 import itertools
 from datetime import date
-from flask import request, Blueprint, g
+from flask import request, Blueprint, g, session
 from app import app
 from collections import Counter
 from app.repo import post_repo
@@ -8,11 +8,12 @@ from app.business import tags_finder
 from app.interfaces import kodilan_client
 
 stats_api = Blueprint('stats', __name__, url_prefix="/api/v1")
+tagsList = list = []
 
-def getTagList():
-    if (not hasattr(g, 'tl')):
-        g.tl = post_repo.get_tags()
-    return g.tl
+@app.before_first_request
+def t():
+    global tagsList
+    tagsList = post_repo.get_tags()
 
 @app.route("/api/v1/setupposts")
 def setupPosts():
@@ -26,7 +27,7 @@ def tag():
     text = request.form.get('text', type = str)
     if (text is None):
         return { 'data': []}
-    return { 'data': tags_finder.exportTagsFromText(text, getTagList()) }
+    return { 'data': tags_finder.exportTagsFromText(text, tagsList) }
 
 
 def get_tags_from_descriptions(startDate, endDate, order):
@@ -34,7 +35,7 @@ def get_tags_from_descriptions(startDate, endDate, order):
     allPostTags = []
     for result in descriptions:
         postContent = result["description"] + "\n" + result["tags"]
-        allPostTags.append(tags_finder.exportTagsFromText(postContent, getTagList()))
+        allPostTags.append(tags_finder.exportTagsFromText(postContent, tagsList))
     return Counter(itertools.chain.from_iterable(allPostTags)) # flat list
 
 
