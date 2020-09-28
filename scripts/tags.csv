@@ -2,7 +2,16 @@ c
 c#
 fastapi
 gin
+tfs
+uml
+orm
+svn
+w3c
 golang
+agile
+scrum
+algorithms|algoritma|algoritmalar
+software-design
 ui
 ux
 ci
@@ -10,7 +19,8 @@ cd
 s3
 e2e
 koa
-hapi
+hapi|hapı|hapijs|hapi.js
+wex
 npm
 ecs
 sqs
@@ -24,10 +34,11 @@ wpf
 wcf
 git
 mvc
-aws
+aws|amazon-web-services
 php
 xml
 css3|css
+metronic
 sql
 tcp
 udp
@@ -48,6 +59,7 @@ xslt
 heap
 ajax
 rest|restful|restapi
+webservice|webservices|webservis|web-servis
 bash
 grid
 mono
@@ -242,7 +254,7 @@ babel
 swipe
 neo4j
 nosql
-rdbms
+rdbms|rdms
 nodes
 pyqt4
 box2d
@@ -332,7 +344,6 @@ label
 alias
 iis-7
 alert
-blogs
 xpath
 adobe
 jboss
@@ -423,19 +434,14 @@ primes
 scheme
 testng
 shader
-select
 printf
-camera
 spring
 applet
-static
-client
 buffer
 router
 mysqli
 opencv
 cygwin
-themes
 amazon
 struct
 struts
@@ -605,7 +611,7 @@ appium
 docker
 xcode6
 jestjs
-gcloud
+gcloud|google-cloud|gcp|google-cloud-platform
 vue.js|vue|vuejs
 unity5
 devops
@@ -654,7 +660,7 @@ wildfly
 tomcat8
 aws-cli
 seaborn
-gruntjs|grun
+gruntjs|grunt
 xamarin
 wso2esb
 swagger
@@ -770,7 +776,6 @@ tinymce
 struts2
 listbox
 newline
-blogger
 aspectj
 cakephp
 verilog
@@ -1168,6 +1173,7 @@ templates
 mediawiki
 memcached
 webserver
+serverless
 filenames
 animation
 singleton
@@ -1195,7 +1201,7 @@ migration
 versioning
 navigation
 sql-server
-javascript
+javascript|js
 encryption
 deployment
 simulation
@@ -1261,6 +1267,8 @@ datatables
 duplicates
 filestream
 virtualenv
+envoyer
+forge
 geospatial
 amazon-ec2
 python-2.x
@@ -1341,15 +1349,14 @@ discord.js|discordjs
 jakarta-ee
 responsive
 vue-router
-english|ingilizce
+english|ingilizce|i̇ngilizce
 python-3.6
 python-3.7
 vuetify.js|vuetifyjs
 discord.py
 laravel-5.3
 laravel-5.4
-bootstrap
-bootstrap-4
+bootstrap|bootstrap3|bootstrap4|bootstrap5
 apache-beam
 react-redux
 angular-cli
@@ -1634,6 +1641,7 @@ asp.net-mvc-2
 matlab-figure
 figma
 photoshop
+sketch
 export-to-csv
 elasticsearch
 python-sphinx
@@ -1833,7 +1841,7 @@ windows-phone-7
 android-webview
 graph-algorithm
 xamarin.android
-data-structures
+data-structures|data-structure|veri-yapilari|veri-yapıları|veriyapıları
 silverlight-4.0
 system.reactive
 session-cookies
@@ -2084,7 +2092,6 @@ android-custom-view
 internet-explorer-8
 exchangewebservices
 windows-server-2008
-amazon-web-services
 internet-explorer-7
 linux-device-driver
 asp.net-mvc-routing
@@ -2139,7 +2146,6 @@ google-sheets-formula
 google-cloud-dataflow
 entity-framework-core
 android-gradle-plugin
-google-cloud-platform
 azure-mobile-services
 google-compute-engine
 aggregation-framework
