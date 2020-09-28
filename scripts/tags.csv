@@ -7,6 +7,7 @@ uml
 orm
 svn
 w3c
+iot
 golang
 agile
 scrum
@@ -1075,7 +1076,7 @@ imageview
 dataframe
 ssrs-2008
 mkmapview
-websocket
+websocket|web-socket
 cassandra
 bing-maps
 windows-7
