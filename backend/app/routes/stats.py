@@ -6,6 +6,8 @@ from collections import Counter
 from app.repo import post_repo
 from app.business import tags_finder
 from app.interfaces import kodilan_client
+from app.utils import html_utils
+import re
 
 stats_api = Blueprint('stats', __name__, url_prefix="/api/v1")
 tagsList = list = []
@@ -29,6 +31,9 @@ def setupPosts():
 @stats_api.route("/extracttags", methods=["GET", "POST"])
 def tag():
     text = request.form.get('text', type=str)
+    if (html_utils.check_is_it_url(text)):
+        html = html_utils.get_page_content(text)
+        text = html_utils.parse_job_description_from_html(html)
     if (text is None):
         return {'data': []}
     return {'data': tags_finder.export_tags_from_text(text, tagsList)}
