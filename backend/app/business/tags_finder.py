@@ -5,6 +5,10 @@ def is_tag_in_text(tag, text) -> bool:
     for currentTag in tag.split('|'):
         currentTag = currentTag.replace('-', ' ')
         pos = 0
+        # cumle sonundaki nokta ve unlem isareti
+        # tagi bulamamasina sebeb oluyor bu yuzne replace ediliyor.
+        text = text.replace('.\n', '\n')
+        text = text.replace('!\n', '\n')
         # tag textte birden fazla yerde gecebilir
         # bu yüzden while ile tum eslesmeleri kontrol ediyoruz.
         while pos < len(text):
@@ -34,14 +38,19 @@ def export_tags_from_text(text, allTags):
     # bosluk , ve ya \n olmasi lazim ki dogru eslesme yapmasi icin
     # bunun icin (Git) gibi gelimelerde parentezler sanki kelimeye dahilmis
     # gibi gorundugu icin bu karakterler boslukla replace ediliyor.
-    replaceChars = ",({)}/'’\"`;+-"
-    for char in replaceChars:
-        text = text.replace(char, ' ')
-    print(text)
 
+    notReplacedText = text
     for tag in allTags:
-        if is_tag_in_text(tag, text):
-            text = text.replace(tag, '')
+        replacedText = notReplacedText
+        replaceChars = ",({)}/'’\"`;+-"
+        for char in replaceChars:
+            # replace karakterlerinden biri tag'de geciyor olabilir.
+            # bu yuzden sadece tagde yok ise replace yapiyoruz
+            # aksi taktirde ex. c++ gibi tagler bulunamaz.
+            if char not in tag:
+                replacedText = replacedText.replace(char, ' ')
+        if is_tag_in_text(tag, replacedText):
+            notReplacedText = notReplacedText.replace(tag, '')
             exportedTags.append(tag.split('|')[0])
     return exportedTags
 

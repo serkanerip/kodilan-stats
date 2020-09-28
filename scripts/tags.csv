@@ -5,9 +5,17 @@ gin
 tfs
 uml
 orm
+ios
+amp
 svn
 w3c
 iot
+jsp
+jpa|jpa2|jpa-2
+ssl
+seo
+cdn
+litespeed
 golang
 agile
 scrum
@@ -43,7 +51,7 @@ metronic
 sql
 tcp
 udp
-oop
+oop|object-oriented-programming|nesne-tabanli-programlama
 async
 mssql
 svelte
@@ -385,6 +393,8 @@ python
 vb.net
 apache
 memory
+pillow
+spark
 delphi
 sqlite
 oracle
@@ -730,12 +740,10 @@ openxml
 libcurl
 handler
 include
-updates
 logback
 dataset
 require
 plpgsql
-request
 padding
 tooltip
 onclick
@@ -817,8 +825,8 @@ android
 drawing
 reverse
 parsing
-storage
 routing
+pyramid
 binding
 grammar
 logging
@@ -849,7 +857,6 @@ asp.net
 windows
 eclipse
 sockets
-browser
 database
 printing
 security
@@ -911,7 +918,7 @@ rubygems
 weblogic
 repeater
 gradient
-servlets
+servlet|servlets
 wxpython
 for-loop
 mod-wsgi
@@ -949,7 +956,6 @@ alfresco
 distinct
 proguard
 delphi-7
-linkedin
 viewport
 sequence
 listener
@@ -964,7 +970,6 @@ selector
 filepath
 xslt-2.0
 fancybox
-optional
 webhooks
 nsstring
 uibutton
@@ -1336,7 +1341,7 @@ swagger-ui
 mean-stack
 protractor
 sprite-kit
-kubernetes
+kubernetes|k8s
 dockerfile
 windows-10
 blockchain
@@ -1548,7 +1553,6 @@ dynamics-crm
 header-files
 cross-domain
 wpf-controls
-relationship
 django-admin
 html-parsing
 where-clause
@@ -1609,7 +1613,7 @@ azure-devops
 nativescript
 docker-swarm
 apache-storm
-react-native
+react-native|reactnative
 ubuntu-18.04
 botframework
 azure-ad-b2c
