@@ -1,5 +1,6 @@
 import requests
 import re
+import os
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
@@ -20,7 +21,7 @@ def check_is_it_url(text):
 
 
 def get_page_content(url):
-    driver_path = "/home/serip/chromedriver"
+    driver_path = os.getenv("SEL_DRIVER_PATH", "/home/serip/chromedriver")
     options = webdriver.ChromeOptions()
     options.add_argument('headless')
     browser = webdriver.Chrome(executable_path=driver_path, chrome_options=options)
