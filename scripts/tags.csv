@@ -254,7 +254,7 @@ babel
 swipe
 neo4j
 nosql
-rdbms|rdms
+rdms|rdbms
 nodes
 pyqt4
 box2d
