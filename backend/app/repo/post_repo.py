@@ -5,6 +5,7 @@ import itertools
 import os
 from app import get_connection
 
+
 def run_query(query, binds=None, cursor_type=pymysql.cursors.DictCursor) -> pymysql.cursors.Cursor:
     connection = get_connection()
     cursor = connection.cursor(cursor_type)
@@ -15,18 +16,21 @@ def run_query(query, binds=None, cursor_type=pymysql.cursors.DictCursor) -> pymy
     connection.commit()
     return cursor
 
+
 def create_post_record(post):
     if check_post_exists_by_slug(post["slug"]):
         return
     connection = get_connection()
     with connection.cursor() as cursor:
-        sql = """INSERT INTO kodilan_posts(slug, position, location, created_at, company, tags, description)VALUES(%s,%s,%s,%s,%s,%s,%s)"""
-        cursor.execute(sql, (post.get('slug'), post.get('position'), post.get('location'), post.get('created_at'), post.get('company'), post.get('tags'), post.get('description')))
+        sql = """INSERT INTO kodilan_posts(slug, position, location, created_at, company, tags, description)VALUES(%s,%s,%s,now(),%s,%s,%s)"""
+        cursor.execute(sql, (post.get('slug'), post.get('position'), post.get('location'), post.get('company'), post.get('tags'), post.get('description')))
         connection.commit()
+
 
 def check_post_exists_by_slug(slug):
     cursor = run_query("SELECT slug FROM kodilan_posts WHERE slug=%s", binds=(slug))
     return cursor.fetchone() is not None
+
 
 def get_location_stats(startDate, endDate, order = "desc"):
     where = f'where `created_at` >= %s && `created_at` <= %s'
@@ -34,11 +38,13 @@ def get_location_stats(startDate, endDate, order = "desc"):
     with run_query(sql, (startDate, endDate)) as cursor:
         return cursor.fetchall()
 
+
 def get_company_stats(startDate, endDate, order = "desc"):
     where = f'where `created_at` >= %s && `created_at` <= %s'
     sql = f'SELECT company, count(*) as toplam_ilan_sayisi from kodilan_posts {where} group by company order by toplam_ilan_sayisi {order};'
     with run_query(sql, (startDate, endDate)) as cursor:
         return cursor.fetchall()
+
 
 def get_all(startDate, endDate, order = "desc"):
     where = f'where `created_at` >= %s && `created_at` <= %s'
@@ -46,11 +52,13 @@ def get_all(startDate, endDate, order = "desc"):
     with run_query(sql, (startDate, endDate)) as cursor:
         return cursor.fetchall()
 
+
 def get_position_stats(startDate, endDate, order = "desc"):
     where = f'where `created_at` >= %s && `created_at` <= %s'
     sql = f'SELECT position, count(*) as toplam_ilan_sayisi from kodilan_posts {where} group by position order by toplam_ilan_sayisi {order};'
     with run_query(sql, (startDate, endDate)) as cursor:
         return cursor.fetchall()
+
 
 def get_lang_stats(startDate, endDate, order = "desc"):
     connection = get_connection()
@@ -64,6 +72,7 @@ def get_lang_stats(startDate, endDate, order = "desc"):
             res.append(cursor.fetchone())
         res.sort(key = operator.itemgetter('total'), reverse=True)
         return res
+
 
 def get_tech_stats(startDate, endDate, order = "desc"):
     connection = get_connection()
@@ -92,6 +101,7 @@ def get_web_framework_stats(startDate, endDate, order = "desc"):
         res.sort(key = operator.itemgetter('total'), reverse=True)
         return res
 
+
 def get_front_end_tech_stats(startDate, endDate, order = "desc"):
     connection = get_connection()
     langs = ["react", "vue", "jquery", "bootstrap", "angular", "redux", "vuex", "figma", "photoshop"]
@@ -105,23 +115,34 @@ def get_front_end_tech_stats(startDate, endDate, order = "desc"):
         res.sort(key = operator.itemgetter('total'), reverse=True)
         return res
 
+
 def get_tags():
     sql = "SELECT * from kodilan_tags order by length(tag) desc"
     with run_query(sql, cursor_type=pymysql.cursors.Cursor) as cursor:
         flatten = itertools.chain.from_iterable
         return list(flatten(cursor.fetchall()))
 
+
 def get_descriptions(startDate, endDate, order = "desc"):
     where = f'where `created_at` >= %s && `created_at` <= %s'
-    sql = f'SELECT description from kodilan_posts {where};'
+    sql = f'SELECT position,description from kodilan_posts {where};'
     with run_query(sql, (startDate, endDate)) as cursor:
         return cursor.fetchall()
+
 
 def get_descriptions_and_tags(startDate, endDate, order = "desc"):
     where = f'where `created_at` >= %s && `created_at` <= %s'
     sql = f'SELECT description, tags from kodilan_posts {where};'
     with run_query(sql, (startDate, endDate)) as cursor:
         return cursor.fetchall()
+
+
+def get_positions(startDate, endDate, order = "desc"):
+    where = f'where `created_at` >= %s && `created_at` <= %s'
+    sql = f'SELECT position from kodilan_posts {where};'
+    with run_query(sql, (startDate, endDate)) as cursor:
+        return cursor.fetchall()
+
 
 def get_related_tag(allTags, tag):
     tagsSum = ""

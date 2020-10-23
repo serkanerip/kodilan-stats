@@ -23,7 +23,7 @@ def is_tag_in_text(tag, text) -> bool:
     return False
 
 
-def export_tags_from_text(text, allTags):
+def export_tags_from_text(text, allTags, excepts=[]):
     # taglerin en uzun tagden en kisaya gore gelmesi lazım
     # aksi taktirde duzgun calismaz.
 
@@ -41,6 +41,8 @@ def export_tags_from_text(text, allTags):
 
     notReplacedText = text
     for tag in allTags:
+        if tag in excepts:
+            continue
         replacedText = notReplacedText
         replaceChars = ",({)}/'’\"`;+-"
         for char in replaceChars:

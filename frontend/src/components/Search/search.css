@@ -1,0 +1,11 @@
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    height: 100vh;
+}
+
+.mini-container {
+    max-width: 600px;
+}

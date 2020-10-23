@@ -8,14 +8,16 @@ app = flask.Flask(__name__)
 app.config.from_pyfile('config.py')
 CORS(app)
 
+
 def get_connection():
     DB_HOST = os.getenv("DB_HOST", "localhost")
     DB_USER = os.getenv("DB_USER", "")
     DB_PASS = os.getenv("DB_PASS", "")
     DB_DATABASE = os.getenv("DB_DATABASE", "kodilan_stats")
     if not hasattr(g, 'db'):
-        g.db = pymysql.connect(DB_HOST,DB_USER, DB_PASS, DB_DATABASE, cursorclass=pymysql.cursors.DictCursor)
+        g.db = pymysql.connect(DB_HOST, DB_USER, DB_PASS, DB_DATABASE, cursorclass=pymysql.cursors.DictCursor)
     return g.db
+
 
 from app.routes.stats import stats_api
 app.register_blueprint(stats_api)

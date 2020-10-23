@@ -1,6 +1,7 @@
 
 .idea
 old_db.py
+stats
 
 # Created by https://www.toptal.com/developers/gitignore/api/react,python,phpstorm,visualstudiocode,linux
 # Edit at https://www.toptal.com/developers/gitignore?templates=react,python,phpstorm,visualstudiocode,linux
