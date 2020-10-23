@@ -3,6 +3,8 @@ import os
 import pymysql
 from flask import request, jsonify, g
 from flask_cors import CORS
+from app.routes.stats import stats_api
+
 
 app = flask.Flask(__name__)
 app.config.from_pyfile('config.py')
@@ -19,8 +21,8 @@ def get_connection():
     return g.db
 
 
-from app.routes.stats import stats_api
 app.register_blueprint(stats_api)
+
 
 @app.teardown_appcontext
 def close_db(error):

@@ -14,7 +14,7 @@ tagsList = list = []
 
 
 @app.before_first_request
-def t():
+def Setup():
     global tagsList
     tagsList = post_repo.get_tags()
 
@@ -107,8 +107,6 @@ def get_posts_that_have_tag(tag):
             relateds = tags_finder.export_tags_from_text(postContent, tagsList, excepts + [tag])
             posts.extend(relateds)
     tags = {}
-    #for tag in Counter(posts).most_common(20):
-    #    tags[f'{tag[0]}'] = tag[1]
     return Counter(posts).most_common()
 
 
@@ -137,6 +135,7 @@ def tagStats():
     return {
         'data': mostTags
     }
+
 
 @app.route("/api/v1/stats/f3")
 def tagStatsF3():

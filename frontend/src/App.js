@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './App.css';
-import Search from './components/Search';
 
 function App() {
   const backend = process.env.REACT_APP_API_URL || "http://localhost:5000"
@@ -13,7 +12,7 @@ function App() {
   }
   return (
     <div className="container-fluid">
-      <Search/>
+      <p>A</p>
     </div>
   );
 }
