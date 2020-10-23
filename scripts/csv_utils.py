@@ -18,6 +18,4 @@ def get_tags_from_csv(csvFilePath):
 def get_excluded_words(filename):
     with open(filename, 'r') as reader:
         content = reader.read()
-        return content.split('\n') 
-
-
+        return content.split('\n')
